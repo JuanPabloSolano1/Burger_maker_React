@@ -6,7 +6,6 @@ import Getprice from "./BurgerInformation";
 import { EraseButton } from "./EraseBuilder";
 import { BurgerButtons } from "./BurgerButtons";
 
-// Clear out order
 class BurgerBuilder extends React.Component {
   constructor(props) {
     super(props);
@@ -68,7 +67,6 @@ class BurgerBuilder extends React.Component {
         total_price: 0
       }));
     });
-    console.log(this.state.quantity);
   }
 
   render() {
@@ -82,7 +80,11 @@ class BurgerBuilder extends React.Component {
               total={this.state.total_items}
               price={this.state.total_price}
             />
-            <EraseButton className="clear_button" click={this.eraseItems} />
+            <EraseButton
+              className="clear_button"
+              click={this.eraseItems}
+              total_ingredients={this.state.total_items}
+            />
           </div>
           <div className="Burger_buttons">
             {Object.keys(this.state.quantity).map((element, index) => {
