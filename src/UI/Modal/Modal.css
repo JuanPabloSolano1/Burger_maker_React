@@ -1,0 +1,50 @@
+.Modal {
+  position: fixed;
+  z-index: 500;
+  background-color: white;
+  width: 70%;
+  border: 8px solid white;
+  box-shadow: 1px 1px 1px black;
+  padding: 16px;
+  left: 15%;
+  top: 30%;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+  background-image: url("https://res.cloudinary.com/spread-the-love/image/upload/v1589296160/austin-chan-ukzHlkoz1IE-unsplash_qzvj2q.jpg");
+  background-size: cover;
+}
+
+.Modal_Information li {
+  color: white;
+  text-align: left;
+  font-size: 17px;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 1px;
+}
+
+p.Modal_Information {
+  color: white;
+  text-align: left;
+  font-size: 17px;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 1px;
+}
+
+.span {
+  padding-right: 10px;
+}
+
+.Modal_text {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 21px;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 2px;
+}
+
+@media (min-width: 600px) {
+  .Modal {
+    width: 500px;
+    left: calc(50% - 250px);
+  }
+}

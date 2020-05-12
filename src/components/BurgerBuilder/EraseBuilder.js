@@ -11,7 +11,7 @@ export const EraseButton = props => {
         </Button>
       ))
     : (button = (
-        <Button className="submit_order" onClick={props.click}>
+        <Button className="submit_order" onClick={props.purchased}>
           Submit Order
         </Button>
       ));
