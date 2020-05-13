@@ -1,5 +1,7 @@
 import React from "react";
 import "./Modal.css";
+import Button from "@material-ui/core/Button";
+import { Backdrop } from "../Backdrop/Backdrop";
 
 export const Modal = props => {
   const ingredients = Object.keys(props.ingredients).map((element, index) => {
@@ -16,6 +18,7 @@ export const Modal = props => {
   });
   return (
     <React.Fragment>
+      <Backdrop show={props.show} clicked={props.closeModal} />
       <div
         style={{
           transform: props.show ? "translateY(0)" : "translateY(-100vh)"
@@ -29,6 +32,9 @@ export const Modal = props => {
             Total Price: €{props.price.toFixed(2)}
           </p>
           <h4>Complete Check Out</h4>
+          <Button className="ModalButton" onClick={props.closeButton}>
+            Close
+          </Button>
         </div>
       </div>
     </React.Fragment>

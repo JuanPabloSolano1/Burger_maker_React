@@ -42,6 +42,13 @@ p.Modal_Information {
   letter-spacing: 2px;
 }
 
+button.MuiButtonBase-root.MuiButton-root.MuiButton-text.ModalButton {
+  background-color: brown;
+  height: 36px;
+  width: 100px;
+  display: flex;
+}
+
 @media (min-width: 600px) {
   .Modal {
     width: 500px;

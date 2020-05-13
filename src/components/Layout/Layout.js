@@ -1,10 +1,11 @@
 import React from "react";
 import Aux from "../../hoc/Aux";
 import "./Layout_c.css";
+import { ToolBox } from "../../UI/Toolbar/Toolbar";
 const layout = props => {
   return (
     <Aux>
-      <div>Components</div>
+      <ToolBox />
       <main className="Content">{props.children}</main>
     </Aux>
   );

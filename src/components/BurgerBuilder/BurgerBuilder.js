@@ -6,6 +6,7 @@ import Getprice from "./BurgerInformation";
 import { EraseButton } from "./EraseBuilder";
 import { BurgerButtons } from "./BurgerButtons";
 import { Modal } from "../../UI/Modal/Modal";
+import { Toolbar } from "@material-ui/core";
 
 class BurgerBuilder extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class BurgerBuilder extends React.Component {
     this.getSubstraction = this.getSubstraction.bind(this);
     this.eraseItems = this.eraseItems.bind(this);
     this.purchaseHandler = this.purchaseHandler.bind(this);
+    this.modalHandler = this.modalHandler.bind(this);
   }
   getAddition(ingre) {
     this.setState(prevState => ({
@@ -77,6 +79,12 @@ class BurgerBuilder extends React.Component {
     });
   }
 
+  modalHandler() {
+    this.setState({
+      purchased: false
+    });
+  }
+
   render() {
     return (
       <Aux>
@@ -84,6 +92,8 @@ class BurgerBuilder extends React.Component {
           show={this.state.purchased}
           ingredients={this.state.quantity}
           price={this.state.total_price}
+          closeModal={this.modalHandler}
+          closeButton={this.modalHandler}
         />
         <Burger ingredients={this.state.quantity} />
         <div className="container">

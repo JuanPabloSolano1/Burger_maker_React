@@ -1,0 +1,24 @@
+.Toolbar {
+  margin-top: -33px;
+  display: flex;
+  width: 100%;
+  background-color: #c9c9c9;
+  border: solid rgba(0, 0, 0, 0.87);
+  position: fixed;
+  z-index: 1;
+  height: 65px;
+  justify-content: space-around;
+  font-weight: bold;
+  background-image: url("https://res.cloudinary.com/spread-the-love/image/upload/v1588242510/delila-ziebart-b0GSCFJ-Gzg-unsplash_a0dbfw.jpg");
+  background-size: cover;
+}
+
+.Toolbar p {
+  color: white;
+  letter-spacing: 2px;
+  padding-top: 10px;
+}
+
+body {
+  overflow: clip;
+}
