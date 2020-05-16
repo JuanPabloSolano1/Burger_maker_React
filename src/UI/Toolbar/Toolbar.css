@@ -1,24 +1,39 @@
 .Toolbar {
   margin-top: -33px;
-  display: flex;
+  display: flow-root;
   width: 100%;
-  background-color: #c9c9c9;
-  border: solid rgba(0, 0, 0, 0.87);
+  /* background-color: #c9c9c9; */
+  background-color: black;
+  border: solid #e0e0e0;
   position: fixed;
+  border-radius: 12px;
   z-index: 1;
   height: 65px;
   justify-content: space-around;
   font-weight: bold;
-  background-image: url("https://res.cloudinary.com/spread-the-love/image/upload/v1588242510/delila-ziebart-b0GSCFJ-Gzg-unsplash_a0dbfw.jpg");
   background-size: cover;
 }
 
 .Toolbar p {
-  color: white;
+  color: black;
   letter-spacing: 2px;
   padding-top: 10px;
 }
 
 body {
   overflow: clip;
+}
+
+.button {
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  height: 64px;
+  width: 64px;
+  padding-top: 10px;
+  margin-top: 1px;
+}
+
+.icon {
+  background-color: black;
 }

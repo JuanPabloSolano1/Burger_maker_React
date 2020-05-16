@@ -6,8 +6,6 @@ import Getprice from "./BurgerInformation";
 import { EraseButton } from "./EraseBuilder";
 import { BurgerButtons } from "./BurgerButtons";
 import { Modal } from "../../UI/Modal/Modal";
-import { Toolbar } from "@material-ui/core";
-
 class BurgerBuilder extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +24,8 @@ class BurgerBuilder extends React.Component {
       },
       total_items: 0,
       total_price: 0,
-      purchased: false
+      purchased: false,
+      sidedrawer: false
     };
     this.getAddition = this.getAddition.bind(this);
     this.getSubstraction = this.getSubstraction.bind(this);
