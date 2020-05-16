@@ -5,10 +5,10 @@
   background-color: rgba(0, 0, 0, 0.8);
   position: fixed;
   z-index: 200;
-  margin-top: 35px;
+  margin-top: 39px;
   box-sizing: border-box;
   transition: transform 0.3s ease-out;
-  margin-left: 3px;
+  margin-left: -8px;
 }
 
 .open {
@@ -16,4 +16,23 @@
 }
 .close {
   transform: translateY(-100vh);
+}
+
+.burger-images {
+  width: 182px;
+  height: 155px;
+  margin-left: 25px;
+  object-fit: cover;
+}
+
+#Sidedrawer-button {
+  background-color: #a52b2a;
+  margin-left: 40px;
+  margin-top: 20px;
+}
+
+.side-Title {
+  color: white;
+  text-align: center;
+  letter-spacing: 3px;
 }

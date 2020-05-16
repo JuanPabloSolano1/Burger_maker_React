@@ -8,7 +8,6 @@ export const ToolBox = props => {
         <FastfoodIcon className="icon" />
         Menu
       </button>
-      <p>LOGO</p>
     </div>
   );
 };

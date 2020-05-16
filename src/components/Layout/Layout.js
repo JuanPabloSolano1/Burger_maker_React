@@ -12,7 +12,7 @@ const layout = props => {
   return (
     <Aux>
       <ToolBox click={handleClick} />
-      <SideDrawer newSide={newSide} />
+      <SideDrawer newSide={newSide} click={handleClick} />
       <main className="Content">{props.children}</main>
     </Aux>
   );
