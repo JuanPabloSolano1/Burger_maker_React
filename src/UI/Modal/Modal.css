@@ -49,6 +49,16 @@ button.MuiButtonBase-root.MuiButton-root.MuiButton-text.ModalButton {
   display: flex;
 }
 
+.modal-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+button#check-out {
+  background-color: green;
+  width: 125px;
+}
+
 @media (min-width: 600px) {
   .Modal {
     width: 500px;

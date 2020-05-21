@@ -114,3 +114,20 @@ body {
   background-image: url("https://res.cloudinary.com/spread-the-love/image/upload/v1588793980/jon-tyson-qAZO-wu3tik-unsplash_fe9u9m.jpg");
   background-size: cover;
 }
+
+.swal-modal {
+  box-shadow: 1px 1px 1px black;
+  border: 3px solid white;
+  background-color: black;
+  width: 500px;
+  height: 345px;
+}
+.swal-title {
+  color: white;
+  letter-spacing: 1px;
+}
+
+.swal-text {
+  color: white;
+  letter-spacing: 1px;
+}

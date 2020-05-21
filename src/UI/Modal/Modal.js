@@ -32,9 +32,18 @@ export const Modal = props => {
             Total Price: €{props.price.toFixed(2)}
           </p>
           <h4>Complete Check Out</h4>
-          <Button className="ModalButton" onClick={props.closeButton}>
-            Close
-          </Button>
+          <div className="modal-buttons">
+            <Button className="ModalButton" onClick={props.closeButton}>
+              Close
+            </Button>
+            <Button
+              className="ModalButton"
+              id="check-out"
+              onClick={props.sendRequest}
+            >
+              Check Out
+            </Button>
+          </div>
         </div>
       </div>
     </React.Fragment>

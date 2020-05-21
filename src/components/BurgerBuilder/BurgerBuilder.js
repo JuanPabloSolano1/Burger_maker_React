@@ -6,6 +6,8 @@ import Getprice from "./BurgerInformation";
 import { EraseButton } from "./EraseBuilder";
 import { BurgerButtons } from "./BurgerButtons";
 import { Modal } from "../../UI/Modal/Modal";
+import axios from "../../axios_order";
+import swal from "sweetalert";
 class BurgerBuilder extends React.Component {
   constructor(props) {
     super(props);
@@ -32,6 +34,7 @@ class BurgerBuilder extends React.Component {
     this.eraseItems = this.eraseItems.bind(this);
     this.purchaseHandler = this.purchaseHandler.bind(this);
     this.modalHandler = this.modalHandler.bind(this);
+    this.sendRequest = this.sendRequest.bind(this);
   }
   getAddition(ingre) {
     this.setState(prevState => ({
@@ -84,6 +87,32 @@ class BurgerBuilder extends React.Component {
     });
   }
 
+  sendRequest() {
+    const post = {
+      quantity: this.state.quantity,
+      total_items: this.state.total_items,
+      price: this.state.total_price,
+      user: {
+        name: "Juan Pablo Solano",
+        address: "677 osdorper Ban 677"
+      },
+      payment: {
+        credit_card: true
+      }
+    };
+    axios
+      .post("/item.json", post)
+      .then(response => {
+        console.log(response);
+        swal({
+          title: "Order has been placed!",
+          text: "thank you for your payment",
+          icon: "success"
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
       <Aux>
@@ -93,6 +122,7 @@ class BurgerBuilder extends React.Component {
           price={this.state.total_price}
           closeModal={this.modalHandler}
           closeButton={this.modalHandler}
+          sendRequest={this.sendRequest}
         />
         <Burger ingredients={this.state.quantity} />
         <div className="container">
