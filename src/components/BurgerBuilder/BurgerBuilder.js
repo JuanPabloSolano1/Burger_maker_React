@@ -8,6 +8,7 @@ import { BurgerButtons } from "./BurgerButtons";
 import { Modal } from "../../UI/Modal/Modal";
 import axios from "../../axios_order";
 import { Loader } from "./../../UI/Loader/Loader";
+import swal from "sweetalert";
 import { TextareaAutosize } from "@material-ui/core";
 class BurgerBuilder extends React.Component {
   constructor(props) {
@@ -113,8 +114,8 @@ class BurgerBuilder extends React.Component {
           spinner: false,
           purchased: false
         });
-        alert("Order Submited");
-        window.location.reload(true);
+        swal("Order Submitted");
+        this.eraseItems();
       })
       .catch(error => {
         console.log(error);
