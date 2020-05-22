@@ -114,12 +114,13 @@ class BurgerBuilder extends React.Component {
   }
 
   render() {
+    const { purchased, quantity, total_price, total_items } = this.state;
     return (
       <Aux>
         <Modal
-          show={this.state.purchased}
-          ingredients={this.state.quantity}
-          price={this.state.total_price}
+          show={purchased}
+          ingredients={quantity}
+          price={total_price}
           closeModal={this.modalHandler}
           closeButton={this.modalHandler}
           sendRequest={this.sendRequest}
@@ -128,19 +129,16 @@ class BurgerBuilder extends React.Component {
         <div className="container">
           <div className="burger_price">
             <p className="order_title">Order Status</p>
-            <Getprice
-              total={this.state.total_items}
-              price={this.state.total_price}
-            />
+            <Getprice total={total_items} price={total_price} />
             <EraseButton
               className="clear_button"
               click={this.eraseItems}
-              total_ingredients={this.state.total_items}
+              total_ingredients={total_items}
               purchased={this.purchaseHandler}
             />
           </div>
           <div className="Burger_buttons">
-            {Object.keys(this.state.quantity).map((element, index) => {
+            {Object.keys(quantity).map((element, index) => {
               return (
                 <BurgerButtons
                   increaseIngredients={this.getAddition}
