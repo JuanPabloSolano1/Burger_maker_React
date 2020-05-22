@@ -7,7 +7,8 @@ import { EraseButton } from "./EraseBuilder";
 import { BurgerButtons } from "./BurgerButtons";
 import { Modal } from "../../UI/Modal/Modal";
 import axios from "../../axios_order";
-import swal from "sweetalert";
+import { Loader } from "./../../UI/Loader/Loader";
+import { TextareaAutosize } from "@material-ui/core";
 class BurgerBuilder extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +28,8 @@ class BurgerBuilder extends React.Component {
       total_items: 0,
       total_price: 0,
       purchased: false,
-      sidedrawer: false
+      sidedrawer: false,
+      spinner: false
     };
     this.getAddition = this.getAddition.bind(this);
     this.getSubstraction = this.getSubstraction.bind(this);
@@ -88,6 +90,9 @@ class BurgerBuilder extends React.Component {
   }
 
   sendRequest() {
+    this.setState({
+      spinner: true
+    });
     const post = {
       quantity: this.state.quantity,
       total_items: this.state.total_items,
@@ -104,19 +109,35 @@ class BurgerBuilder extends React.Component {
       .post("/item.json", post)
       .then(response => {
         console.log(response);
-        swal({
-          title: "Order has been placed!",
-          text: "thank you for your payment",
-          icon: "success"
+        this.setState({
+          spinner: false,
+          purchased: false
         });
+        alert("Order Submited");
+        window.location.reload(true);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          spinner: false,
+          purchased: false
+        });
+      });
   }
 
   render() {
-    const { purchased, quantity, total_price, total_items } = this.state;
-    return (
-      <Aux>
+    const {
+      purchased,
+      quantity,
+      total_price,
+      total_items,
+      spinner
+    } = this.state;
+    let loader = null;
+    if (spinner) {
+      loader = <Loader />;
+    } else {
+      loader = (
         <Modal
           show={purchased}
           ingredients={quantity}
@@ -125,7 +146,12 @@ class BurgerBuilder extends React.Component {
           closeButton={this.modalHandler}
           sendRequest={this.sendRequest}
         />
+      );
+    }
+    return (
+      <Aux>
         <Burger ingredients={this.state.quantity} />
+        {loader}
         <div className="container">
           <div className="burger_price">
             <p className="order_title">Order Status</p>
