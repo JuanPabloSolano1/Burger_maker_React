@@ -6,20 +6,13 @@ import Getprice from "./BurgerInformation";
 import { EraseButton } from "./EraseBuilder";
 import { BurgerButtons } from "./BurgerButtons";
 import { Modal } from "../../UI/Modal/Modal";
-import axios from "../../axios_order";
-import { Loader } from "./../../UI/Loader/Loader";
-import swal from "sweetalert";
-import { TextareaAutosize } from "@material-ui/core";
+import { connect } from "react-redux";
+import * as actionTypes from "../../store/actions";
+
 class BurgerBuilder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: {
-        cheese: 0,
-        meat: 0,
-        bacon: 0,
-        salad: 0
-      },
       price: {
         cheese: 1.0,
         meat: 2.3,
@@ -27,55 +20,34 @@ class BurgerBuilder extends React.Component {
         salad: 1.5
       },
       total_items: 0,
-      total_price: 0,
-      purchased: false,
-      sidedrawer: false,
-      spinner: false
+      purchased: false
     };
-    this.getAddition = this.getAddition.bind(this);
-    this.getSubstraction = this.getSubstraction.bind(this);
+    // this.getAddition = this.getAddition.bind(this);
+    // this.getSubstraction = this.getSubstraction.bind(this);
     this.eraseItems = this.eraseItems.bind(this);
     this.purchaseHandler = this.purchaseHandler.bind(this);
     this.modalHandler = this.modalHandler.bind(this);
-    this.sendRequest = this.sendRequest.bind(this);
   }
   getAddition(ingre) {
-    this.setState(prevState => ({
-      quantity: {
-        ...prevState.quantity,
-        [ingre]: prevState.quantity[ingre] + 1
-      },
+    this.setState((prevState) => ({
       total_items:
-        Object.values(prevState.quantity).reduce((a, b) => a + b) + 1,
-      total_price: prevState.total_price + 1 * prevState.price[ingre]
+        Object.values(this.props.ingredients).reduce((a, b) => a + b) + 1
     }));
   }
 
   getSubstraction(ingre) {
-    if (this.state.quantity[ingre] <= 0) {
+    if (this.props.ingredients[ingre] <= 0) {
       return;
     }
-    this.setState(prevState => ({
-      quantity: {
-        ...prevState.quantity,
-        [ingre]: prevState.quantity[ingre] - 1
-      },
+    this.setState((prevState) => ({
       total_items:
-        Object.values(prevState.quantity).reduce((a, b) => a + b) - 1,
-      total_price: prevState.total_price - 1 * prevState.price[ingre]
+        Object.values(this.props.ingredients).reduce((a, b) => a + b) - 1
     }));
   }
 
   eraseItems() {
-    Object.keys(this.state.quantity).forEach(ingredient => {
-      this.setState(prevState => ({
-        quantity: {
-          ...prevState.quantity,
-          [ingredient]: 0
-        },
-        total_items: 0,
-        total_price: 0
-      }));
+    this.setState({
+      total_items: 0
     });
   }
   purchaseHandler() {
@@ -90,97 +62,95 @@ class BurgerBuilder extends React.Component {
     });
   }
 
-  sendRequest() {
-    this.setState({
-      spinner: true
-    });
-    const post = {
-      quantity: this.state.quantity,
-      total_items: this.state.total_items,
-      price: this.state.total_price,
-      user: {
-        name: "Juan Pablo Solano",
-        address: "677 osdorper Ban 677"
-      },
-      payment: {
-        credit_card: true
-      }
-    };
-    axios
-      .post("/item.json", post)
-      .then(response => {
-        console.log(response);
-        this.setState({
-          spinner: false,
-          purchased: false
-        });
-        swal("Order Submitted");
-        this.eraseItems();
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({
-          spinner: false,
-          purchased: false
-        });
-      });
-  }
-
   render() {
-    const {
-      purchased,
-      quantity,
-      total_price,
-      total_items,
-      spinner
-    } = this.state;
-    let loader = null;
-    if (spinner) {
-      loader = <Loader />;
-    } else {
-      loader = (
-        <Modal
-          show={purchased}
-          ingredients={quantity}
-          price={total_price}
-          closeModal={this.modalHandler}
-          closeButton={this.modalHandler}
-          sendRequest={this.sendRequest}
-        />
-      );
-    }
+    const { totalPrice, ingredients } = this.props;
     return (
       <Aux>
-        <Burger ingredients={this.state.quantity} />
-        {loader}
+        <Modal
+          show={this.state.purchased}
+          ingredients={ingredients}
+          price={totalPrice}
+          closeModal={this.modalHandler}
+          closeButton={this.modalHandler}
+        />
+        <Burger ingredients={this.props.ingredients} />
         <div className="container">
           <div className="burger_price">
             <p className="order_title">Order Status</p>
-            <Getprice total={total_items} price={total_price} />
+            <Getprice total={this.state.total_items} price={totalPrice} />
             <EraseButton
               className="clear_button"
-              click={this.eraseItems}
-              total_ingredients={total_items}
+              click={() => {
+                this.eraseItems();
+                this.props.onEraseObjects();
+              }}
+              total_ingredients={this.state.total_items}
               purchased={this.purchaseHandler}
             />
           </div>
           <div className="Burger_buttons">
-            {Object.keys(quantity).map((element, index) => {
-              return (
-                <BurgerButtons
-                  increaseIngredients={this.getAddition}
-                  decreaseIngredients={this.getSubstraction}
-                  keys={index}
-                  item={element}
-                  ing={element}
-                />
-              );
-            })}
+            {Object.keys(this.props.ingredients).map(
+              (ingredientName, index) => {
+                return (
+                  <BurgerButtons
+                    keys={index}
+                    increaseIngredients={() => {
+                      this.props.onIncrementIngredient(
+                        ingredientName,
+                        this.state.price
+                      );
+                      this.getAddition(ingredientName);
+                    }}
+                    decreaseIngredients={() => {
+                      this.props.onDecreaseIngredient(
+                        ingredientName,
+                        this.state.price
+                      );
+                      this.getSubstraction(ingredientName);
+                    }}
+                    item={ingredientName}
+                    ing={ingredientName}
+                    ingredients={this.props.ingredients}
+                  />
+                );
+              }
+            )}
           </div>
         </div>
       </Aux>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice,
+    totalOrder: state.total_items
+  };
+};
 
-export default BurgerBuilder;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onIncrementIngredient: (ingredientName, price) =>
+      dispatch({
+        type: actionTypes.ADD_INGREDIENTS,
+        ingredientName: ingredientName,
+        price: price[ingredientName],
+        item: 1
+      }),
+    onDecreaseIngredient: (ingredientName, price) =>
+      dispatch({
+        type: actionTypes.REMOVE_INGREDIENTS,
+        ingredientName: ingredientName,
+        price: price[ingredientName],
+        item: 1
+      }),
+    onEraseObjects: () =>
+      dispatch({
+        type: actionTypes.CLEAR_INGREDIENTS,
+        ingredients: { salad: 0, bacon: 0, meat: 0, cheese: 0 }
+      })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);
