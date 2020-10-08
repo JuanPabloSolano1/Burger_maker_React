@@ -20,99 +20,60 @@ class BurgerBuilder extends React.Component {
         salad: 1.5
       }
     };
-    // this.getAddition = this.getAddition.bind(this);
-    // this.getSubstraction = this.getSubstraction.bind(this);
-    this.eraseItems = this.eraseItems.bind(this);
-    this.purchaseHandler = this.purchaseHandler.bind(this);
-    this.modalHandler = this.modalHandler.bind(this);
-  }
-  getAddition(ingre) {
-    this.setState((prevState) => ({
-      total_items:
-        Object.values(this.props.ingredients).reduce((a, b) => a + b) + 1
-    }));
-  }
-
-  getSubstraction(ingre) {
-    if (this.props.ingredients[ingre] <= 0) {
-      return;
-    }
-    this.setState((prevState) => ({
-      total_items:
-        Object.values(this.props.ingredients).reduce((a, b) => a + b) - 1
-    }));
-  }
-
-  eraseItems() {
-    this.setState({
-      total_items: 0
-    });
-  }
-  purchaseHandler() {
-    this.setState({
-      purchased: true
-    });
-  }
-
-  modalHandler() {
-    this.setState({
-      purchased: false
-    });
   }
 
   render() {
-    const { totalPrice, ingredients } = this.props;
+    const {
+      totalPrice,
+      ingredients,
+      onPurchase,
+      purchased,
+      total_items,
+      onIncrementIngredient,
+      onDecreaseIngredient,
+      onEraseObjects
+    } = this.props;
+    const { price } = this.state;
     return (
       <Aux>
         <Modal
-          show={this.props.purchased}
+          show={purchased}
           ingredients={ingredients}
           price={totalPrice}
-          closeModal={() => this.props.onPurchase(!this.props.purchased)}
-          closeButton={() => this.props.onPurchase(!this.props.purchased)}
+          closeModal={() => onPurchase(!purchased)}
+          closeButton={() => onPurchase(!purchased)}
         />
-        <Burger ingredients={this.props.ingredients} />
+        <Burger ingredients={ingredients} />
         <div className="container">
           <div className="burger_price">
             <p className="order_title">Order Status</p>
-            <Getprice total={this.props.total_items} price={totalPrice} />
+            <Getprice total={total_items} price={totalPrice} />
             <EraseButton
               className="clear_button"
               click={() => {
-                this.eraseItems();
-                this.props.onEraseObjects();
+                onEraseObjects();
               }}
-              total_ingredients={this.props.total_items}
-              purchased={() => this.props.onPurchase(!this.props.purchased)}
+              total_ingredients={total_items}
+              purchased={() => onPurchase(!purchased)}
             />
           </div>
           <div className="Burger_buttons">
-            {Object.keys(this.props.ingredients).map(
-              (ingredientName, index) => {
-                return (
-                  <BurgerButtons
-                    keys={index}
-                    increaseIngredients={() => {
-                      this.props.onIncrementIngredient(
-                        ingredientName,
-                        this.state.price
-                      );
-                      this.getAddition(ingredientName);
-                    }}
-                    decreaseIngredients={() => {
-                      this.props.onDecreaseIngredient(
-                        ingredientName,
-                        this.state.price
-                      );
-                      this.getSubstraction(ingredientName);
-                    }}
-                    item={ingredientName}
-                    ing={ingredientName}
-                    ingredients={this.props.ingredients}
-                  />
-                );
-              }
-            )}
+            {Object.keys(ingredients).map((ingredientName, index) => {
+              return (
+                <BurgerButtons
+                  keys={index}
+                  increaseIngredients={() => {
+                    onIncrementIngredient(ingredientName, price);
+                  }}
+                  decreaseIngredients={() => {
+                    onDecreaseIngredient(ingredientName, price);
+                  }}
+                  item={ingredientName}
+                  ing={ingredientName}
+                  ingredients={ingredients}
+                />
+              );
+            })}
           </div>
         </div>
       </Aux>
