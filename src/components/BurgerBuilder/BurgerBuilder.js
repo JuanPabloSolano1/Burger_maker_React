@@ -18,9 +18,7 @@ class BurgerBuilder extends React.Component {
         meat: 2.3,
         bacon: 3.2,
         salad: 1.5
-      },
-      total_items: 0,
-      purchased: false
+      }
     };
     // this.getAddition = this.getAddition.bind(this);
     // this.getSubstraction = this.getSubstraction.bind(this);
@@ -67,25 +65,25 @@ class BurgerBuilder extends React.Component {
     return (
       <Aux>
         <Modal
-          show={this.state.purchased}
+          show={this.props.purchased}
           ingredients={ingredients}
           price={totalPrice}
-          closeModal={this.modalHandler}
-          closeButton={this.modalHandler}
+          closeModal={() => this.props.onPurchase(!this.props.purchased)}
+          closeButton={() => this.props.onPurchase(!this.props.purchased)}
         />
         <Burger ingredients={this.props.ingredients} />
         <div className="container">
           <div className="burger_price">
             <p className="order_title">Order Status</p>
-            <Getprice total={this.state.total_items} price={totalPrice} />
+            <Getprice total={this.props.total_items} price={totalPrice} />
             <EraseButton
               className="clear_button"
               click={() => {
                 this.eraseItems();
                 this.props.onEraseObjects();
               }}
-              total_ingredients={this.state.total_items}
-              purchased={this.purchaseHandler}
+              total_ingredients={this.props.total_items}
+              purchased={() => this.props.onPurchase(!this.props.purchased)}
             />
           </div>
           <div className="Burger_buttons">
@@ -125,7 +123,8 @@ const mapStateToProps = (state) => {
   return {
     ingredients: state.ingredients,
     totalPrice: state.totalPrice,
-    totalOrder: state.total_items
+    totalOrder: state.total_items,
+    purchased: state.purchased
   };
 };
 
@@ -137,6 +136,11 @@ const mapDispatchToProps = (dispatch) => {
         ingredientName: ingredientName,
         price: price[ingredientName],
         item: 1
+      }),
+    onPurchase: (status) =>
+      dispatch({
+        type: actionTypes.PURCHASED_STATUS,
+        purchase: status
       }),
     onDecreaseIngredient: (ingredientName, price) =>
       dispatch({

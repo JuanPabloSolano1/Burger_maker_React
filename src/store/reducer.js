@@ -7,7 +7,8 @@ const initialState = {
     cheese: 0
   },
   totalPrice: 0,
-  total_items: 0
+  total_items: 0,
+  purchased: false
 };
 
 export const reducer = (state = initialState, action) => {
@@ -38,6 +39,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         ingredients: action.ingredients,
         totalPrice: 0
+      };
+    case actionTypes.PURCHASED_STATUS:
+      return {
+        ...state,
+        purchased: action.purchase
       };
     default:
       return state;
