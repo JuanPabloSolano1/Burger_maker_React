@@ -38,7 +38,8 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         ingredients: action.ingredients,
-        totalPrice: 0
+        totalPrice: 0,
+        total_items: action.total_items
       };
     case actionTypes.PURCHASED_STATUS:
       return {

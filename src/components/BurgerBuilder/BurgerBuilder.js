@@ -28,7 +28,7 @@ class BurgerBuilder extends React.Component {
       ingredients,
       onPurchase,
       purchased,
-      total_items,
+      totalItems,
       onIncrementIngredient,
       onDecreaseIngredient,
       onEraseObjects
@@ -47,13 +47,13 @@ class BurgerBuilder extends React.Component {
         <div className="container">
           <div className="burger_price">
             <p className="order_title">Order Status</p>
-            <Getprice total={total_items} price={totalPrice} />
+            <Getprice total={totalItems} price={Math.abs(totalPrice)} />
             <EraseButton
               className="clear_button"
               click={() => {
                 onEraseObjects();
               }}
-              total_ingredients={total_items}
+              total_ingredients={totalItems}
               purchased={() => onPurchase(!purchased)}
             />
           </div>
@@ -85,7 +85,8 @@ const mapStateToProps = (state) => {
     ingredients: state.ingredients,
     totalPrice: state.totalPrice,
     totalOrder: state.total_items,
-    purchased: state.purchased
+    purchased: state.purchased,
+    totalItems: state.total_items
   };
 };
 
@@ -113,7 +114,8 @@ const mapDispatchToProps = (dispatch) => {
     onEraseObjects: () =>
       dispatch({
         type: actionTypes.CLEAR_INGREDIENTS,
-        ingredients: { salad: 0, bacon: 0, meat: 0, cheese: 0 }
+        ingredients: { salad: 0, bacon: 0, meat: 0, cheese: 0 },
+        total_items: 0
       })
   };
 };

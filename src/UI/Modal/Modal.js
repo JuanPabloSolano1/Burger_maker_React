@@ -2,8 +2,9 @@ import React from "react";
 import "./Modal.css";
 import Button from "@material-ui/core/Button";
 import { Backdrop } from "../Backdrop/Backdrop";
+import { useHistory } from "react-router-dom";
 
-export const Modal = props => {
+export const Modal = (props) => {
   const ingredients = Object.keys(props.ingredients).map((element, index) => {
     if (props.ingredients[element] > 0) {
       return (
@@ -16,6 +17,10 @@ export const Modal = props => {
       );
     }
   });
+  let history = useHistory();
+  const handleRoute = () => {
+    history.push("/checkout");
+  };
   return (
     <React.Fragment>
       <Backdrop show={props.show} clicked={props.closeModal} />
@@ -39,7 +44,7 @@ export const Modal = props => {
             <Button
               className="ModalButton"
               id="check-out"
-              onClick={props.sendRequest}
+              onClick={() => handleRoute()}
             >
               Check Out
             </Button>
