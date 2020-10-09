@@ -4,3 +4,15 @@
   padding-top: 80px;
   text-align: center;
 }
+.checkout-buttons {
+  text-align: center;
+}
+
+button.MuiButtonBase-root.MuiButton-root.MuiButton-text.cancel-button {
+  background-color: brown;
+  margin-right: 30px;
+}
+
+button.MuiButtonBase-root.MuiButton-root.MuiButton-text.continue-button {
+  background-color: green;
+}
