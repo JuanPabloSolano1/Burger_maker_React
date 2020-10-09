@@ -1,0 +1,25 @@
+label.form-label {
+  color: white;
+  padding-right: 30px;
+  text-align: left;
+  font-size: 20px;
+}
+
+.form-container {
+  display: grid;
+  justify-items: center;
+}
+
+.form-input {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 400px;
+  height: 40px;
+  border-radius: 17px;
+  border: solid;
+}
+
+#submit-button {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}

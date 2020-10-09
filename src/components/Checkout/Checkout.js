@@ -13,8 +13,7 @@ const Checkout = (props) => {
   };
 
   const continueOrder = () => {
-    console.log("Hello");
-    history.push("/checkout/contact-data");
+    history.replace("/checkout/contact-data");
   };
   const { ingredients, onCloseModal, purchased } = props;
   return (
