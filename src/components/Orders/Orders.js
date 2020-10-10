@@ -17,17 +17,18 @@ const Orders = () => {
   let orders = null;
   if (newOrders != null) {
     orders = Object.values(newOrders).map((element, index) => {
+      const { name, address, email, order } = element;
       return (
         <div>
           <h2>Contact Information</h2>
           <p>Order-id: {index + 1}</p>
-          <p>Name: {element.name}</p>
-          <p>Email: {element.email}</p>
-          <p>Address: {element.address}</p>
-          <p>Price: {`$${element.order.price}`}</p>
-          <p>Total Items: {element.order.total_items}</p>
+          <p>Name: {name}</p>
+          <p>Email: {email}</p>
+          <p>Address: {address}</p>
+          <p>Price: {`$${order.price}`}</p>
+          <p>Total Items: {order.total_items}</p>
           <h2>Ingredients</h2>
-          {Object.keys(element.order.ingredients).map((ingredient) => {
+          {Object.keys(order.ingredients).map((ingredient) => {
             return (
               <div className="order-ingredients">
                 <p>{`${ingredient}: ${element.order.ingredients[ingredient]}`}</p>
