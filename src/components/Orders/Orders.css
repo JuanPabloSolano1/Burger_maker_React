@@ -1,0 +1,10 @@
+.orders {
+  padding-top: 78px;
+  color: white;
+  text-align: center;
+}
+
+.order-ingredients {
+  display: inline-flex;
+  margin-right: 10px;
+}

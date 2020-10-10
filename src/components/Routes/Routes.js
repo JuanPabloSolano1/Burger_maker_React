@@ -5,6 +5,7 @@ import Layout from "../Layout/Layout";
 import { withRouter } from "react-router";
 import ContactData from "../Checkout/ContactData";
 import Checkout from "../Checkout/Checkout";
+import Orders from "../Orders/Orders";
 
 class Routes extends React.Component {
   render() {
@@ -19,6 +20,7 @@ class Routes extends React.Component {
               path="/checkout/contact-data"
               component={ContactData}
             />
+            <Route exact path="/orders" component={Orders} />
           </Switch>
         </Layout>
       </div>
